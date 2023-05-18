@@ -1,0 +1,99 @@
+unit_price = {}
+product = {}
+category = {}
+stock = {}
+cart = []
+total_cost = 0
+
+def add_item():
+    p_no = int(input("-->Enter item number: "))
+    if p_no in unit_price:
+        print("That item number already exists. Please enter a different item number.")
+    else:
+        p_pr = float(input("-->Enter item price: "))
+        p_prod = input("-->Enter product name: ")
+        p_cat = input("-->Enter item category: ")
+        p_stock = int(input("-->Enter item stock: "))
+        
+        unit_price[p_no] = p_pr
+        product[p_no] = p_prod
+        category[p_no] = p_cat
+        stock[p_no] = p_stock
+        
+        print("Item added successfully!")
+def remove_item():
+    p_no = int(input("-->Enter item number: "))
+    if p_no in unit_price:
+        are_you_sure = input("Are you sure you want to remove that item (y/n)? ")
+        if are_you_sure.lower() == "y":
+            unit_price.pop(p_no)
+            product.pop(p_no)
+            category.pop(p_no)
+            stock.pop(p_no)
+            print("Item successfully removed!")
+        else:
+            print("Item removal canceled.")
+    else:
+        print("Item not found in inventory.")
+
+def edit_item():
+    p_no = int(input("-->Enter item number: "))
+    if p_no in unit_price:
+        print("Current details:")
+        print("Item number:", p_no)
+        print("Product:", product[p_no])
+        print("Price:", unit_price[p_no])
+        print("Category:", category[p_no])
+        print("Stock:", stock[p_no])
+        print()
+        print("Enter new details:")
+        p_pr = float(input("-->Enter item price: "))
+        p_prod = input("-->Enter product name: ")
+        p_cat = input("-->Enter item category: ")
+        p_stock = int(input("-->Enter item stock: "))
+        
+        unit_price[p_no] = p_pr
+        product[p_no] = p_prod
+        category[p_no] = p_cat
+        stock[p_no] = p_stock
+        
+        print("Item details updated successfully!")
+    else:
+        print("Item not found in inventory.")
+
+def list_items():
+    print("List of Available Items:")
+    for p_no in unit_price:
+        print("Item number:", p_no)
+        print("Product:", product[p_no])
+        print("Price: PHP", unit_price[p_no])
+        print("Category:", category[p_no])
+        print("Stock:", stock[p_no])
+        print()
+def inquire_item():
+    p_no = int(input("-->Enter item number: "))
+    if p_no in unit_price:
+        print("Item number:", p_no)
+        print("Product:", product[p_no])
+        print("Price: PHP", unit_price[p_no])
+        print("Category:", category[p_no])
+        print("Stock:", stock[p_no])
+    else:
+        print("Item not found in inventory.")
+
+def purchase_item():
+    p_no = int(input("-->Enter item number: "))
+    if p_no in unit_price:
+        if stock[p_no] > 0:
+            stock[p_no] -= 1
+            item_price = unit_price[p_no]
+            total_cost += item_price
+            print(product[p_no], "added to cart: PHP", item_price)
+            cart.append(p_no)
+        else:
+            print("Item out of stock.")
+    else:
+        print("Item not found in inventory.")
+
+def checkout():
+    print("Items purchased:")
